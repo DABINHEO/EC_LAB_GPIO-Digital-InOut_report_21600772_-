@@ -2,7 +2,7 @@
 @ Embedded Controller by Young-Keun Kim - Handong Global University
 Author           : SSS LAB(revised by HEO DABIN)
 Created          : 05-03-2021
-Modified         : 09-20-2022
+Modified         : 10-02-2022
 Language/ver     : C++ in Keil uVision
 
 Description      : Distributed to Students for LAB_GPIO
@@ -21,15 +21,10 @@ void GPIO_init(GPIO_TypeDef *Port, int pin, int mode){
 	if (Port == GPIOC)
 		RCC_GPIOC_enable();
 	
-	//[TO-DO] YOUR CODE GOES HERE
-	// Make it for GPIOB, GPIOD..GPIOH
 	if (Port == GPIOB)
 		RCC_GPIOB_enable();
-	// You can also make a more general function of
-	// void RCC_GPIO_enable(GPIO_TypeDef *Port); 
 
 	GPIO_mode(Port, pin, mode);
-	
 }
 
 // GPIO Write          : LOW(0) HIGH(1)
@@ -48,34 +43,26 @@ void GPIO_mode(GPIO_TypeDef *Port, int pin, int mode){
 
 // GPIO Speed          : Low speed (00), Medium speed (01), Fast speed (10), High speed (11)
 void GPIO_ospeed(GPIO_TypeDef *Port, int pin, int speed){
-	//[TO-DO] YOUR CODE GOES HERE
 	Port->OSPEEDR &= ~(3UL<<(2*pin));	
 	Port->OSPEEDR |= speed<<(2*pin);
-	//[TO-DO] YOUR CODE GOES HERE
 }
 
 // GPIO Output Type: Output push-pull (0, reset), Output open drain (1)
 void GPIO_otype(GPIO_TypeDef *Port, int pin, int type){
-	//[TO-DO] YOUR CODE GOES HERE
 	Port->OTYPER &= ~(1UL<<pin);
 	Port->OTYPER |= type<<pin;
-	//[TO-DO] YOUR CODE GOES HERE
 }
 
 // GPIO Push-Pull    : No pull-up, pull-down (00), Pull-up (01), Pull-down (10), Reserved (11)
 void GPIO_pupd(GPIO_TypeDef *Port, int pin, int pupd){
-	//[TO-DO] YOUR CODE GOES HERE
 	Port->PUPDR &= ~(3UL<<(2*pin));	
 	Port->PUPDR |=	pupd<<(2*BUTTON_PIN);
-	//[TO-DO] YOUR CODE GOES HERE
 }
 
 int GPIO_read(GPIO_TypeDef *Port, int pin){
-	//[TO-DO] YOUR CODE GOES HERE
 	int btVal;
 	btVal=(Port->IDR) & (1UL<<pin);
-	//[TO-DO] YOUR CODE GOES HERE
-	return btVal;    	//[TO-DO] YOUR CODE GOES HERE	
+	return btVal;
 }
 
 
@@ -85,7 +72,6 @@ void LED_init(void){
 	GPIO_init(GPIOA, 7, OUTPUT);
 	GPIO_init(GPIOB, 6, OUTPUT);
 	
-	GPIO_pupd(GPIOC, BUTTON_PIN, EC_PU);
 	GPIO_pupd(GPIOA, 5, EC_PU);
 	GPIO_pupd(GPIOA, 6, EC_PU);
 	GPIO_pupd(GPIOA, 7, EC_PU);
